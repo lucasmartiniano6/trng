@@ -1,0 +1,44 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ADC_SEEN	lib/adc.h	2;"	d
+BAUD	lib/uart.h	9;"	d
+BAUD	old/old.c	17;"	d	file:
+BAUDRATE	lib/uart.h	10;"	d
+BAUDRATE	old/old.c	18;"	d	file:
+BUFFSIZE	lib/adc.h	5;"	d
+BUFFSIZE	old/old.c	21;"	d	file:
+CC	Makefile	/^CC=avr-gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS=-g -Wall -mcall-prologues -mmcu=$(MCU) -Os$/;"	m
+DELAY_US	lib/adc.h	6;"	d
+DELAY_US	old/old.c	22;"	d	file:
+F_CPU	lib/uart.h	5;"	d
+F_CPU	main.c	9;"	d	file:
+F_CPU	old/old.c	9;"	d	file:
+LDFLAGS	Makefile	/^LDFLAGS=-Wl,-gc-sections -Wl,-relax$/;"	m
+MCU	Makefile	/^MCU=atmega328p$/;"	m
+OBJECT_FILES	Makefile	/^OBJECT_FILES := $(SRCS:%.c=%.o)$/;"	m
+PORT	Makefile	/^PORT=\/dev\/ttyUSB0$/;"	m
+SRCS	Makefile	/^SRCS := $(wildcard $(dirs))$/;"	m
+TARGET	Makefile	/^TARGET = main$/;"	m
+UART_SEEN	lib/uart.h	2;"	d
+adc_init	lib/adc.c	/^void adc_init(){$/;"	f
+adc_init	old/old.c	/^void adc_init(){$/;"	f
+adc_read	lib/adc.c	/^uint8_t adc_read(uint8_t ch){$/;"	f
+adc_read	old/old.c	/^uint8_t adc_read(uint8_t ch){$/;"	f
+dirs	Makefile	/^dirs = *.c lib\/*.c$/;"	m
+fill_byte	old/old.c	/^void fill_byte(uint8_t recv_byte, unsigned int cnt, uint8_t *final_byte, unsigned int cntfinal){$/;"	f
+fill_byte	refactor.c	/^uint8_t fill_byte(tempbyteA, tempbyteB){$/;"	f
+main	main.c	/^int main(void){$/;"	f
+main	old/old.c	/^int main(void)$/;"	f
+main	refactor.c	/^int main(void)$/;"	f
+neuman	lib/adc.c	/^uint8_t neuman(uint8_t bRecv, unsigned int* cnt){$/;"	f
+neuman	old/old.c	/^uint8_t neuman(uint8_t bRecv, unsigned int* cnt){$/;"	f
+sendByte	refactor.c	/^void sendByte(uint8_t final, uint8_t buffer[BUFFSIZE]){$/;"	f
+uart_init	lib/uart.c	/^void uart_init (void)$/;"	f
+uart_init	old/old.c	/^void uart_init (void)$/;"	f
+uart_transmit	lib/uart.c	/^void uart_transmit (uint8_t data)$/;"	f
+uart_transmit	old/old.c	/^void uart_transmit (uint8_t data)$/;"	f

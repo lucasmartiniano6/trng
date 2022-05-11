@@ -1,0 +1,506 @@
+
+interfaceTRNG.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  000002ce  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         0000027a  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  000002ce  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000300  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000050  00000000  00000000  00000340  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000a21  00000000  00000000  00000390  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000007ea  00000000  00000000  00000db1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000409  00000000  00000000  0000159b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000000ac  00000000  00000000  000019a4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000047f  00000000  00000000  00001a50  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000002de  00000000  00000000  00001ecf  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000058  00000000  00000000  000021ad  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  10:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  40:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+  74:	0e 94 d2 00 	call	0x1a4	; 0x1a4 <main>
+  78:	0c 94 3b 01 	jmp	0x276	; 0x276 <_exit>
+
+0000007c <__bad_interrupt>:
+  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000080 <uart_init>:
+#define DELAY_US 5          //delay in microseconds(us) before each adc measurement
+
+// function to initialize UART
+void uart_init (void)
+{
+	UBRR0H = (BAUDRATE>>8);                      // shift the register right by 8 bits
+  80:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__DATA_REGION_ORIGIN__+0x65>
+	UBRR0L = BAUDRATE;                           // set baud rate
+  84:	87 e0       	ldi	r24, 0x07	; 7
+  86:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__DATA_REGION_ORIGIN__+0x64>
+	UCSR0B|= (1<<TXEN0);						// enable transmitter
+  8a:	e1 ec       	ldi	r30, 0xC1	; 193
+  8c:	f0 e0       	ldi	r31, 0x00	; 0
+  8e:	80 81       	ld	r24, Z
+  90:	88 60       	ori	r24, 0x08	; 8
+  92:	80 83       	st	Z, r24
+	UCSR0C|= (1<<UMSEL01)|(1<<UCSZ00)|(1<<UCSZ01);   // 8bit data format
+  94:	e2 ec       	ldi	r30, 0xC2	; 194
+  96:	f0 e0       	ldi	r31, 0x00	; 0
+  98:	80 81       	ld	r24, Z
+  9a:	86 68       	ori	r24, 0x86	; 134
+  9c:	80 83       	st	Z, r24
+
+	UCSR0A |= (1<<U2X0); //set double speed mode
+  9e:	e0 ec       	ldi	r30, 0xC0	; 192
+  a0:	f0 e0       	ldi	r31, 0x00	; 0
+  a2:	80 81       	ld	r24, Z
+  a4:	82 60       	ori	r24, 0x02	; 2
+  a6:	80 83       	st	Z, r24
+  a8:	08 95       	ret
+
+000000aa <uart_transmit>:
+}
+
+// function to send data
+void uart_transmit (uint8_t data)
+{
+	while (!( UCSR0A & (1<<UDRE0)));                // wait while register is free
+  aa:	e0 ec       	ldi	r30, 0xC0	; 192
+  ac:	f0 e0       	ldi	r31, 0x00	; 0
+  ae:	90 81       	ld	r25, Z
+  b0:	95 ff       	sbrs	r25, 5
+  b2:	fd cf       	rjmp	.-6      	; 0xae <uart_transmit+0x4>
+	UDR0 = data;                                   // load data in the register
+  b4:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__DATA_REGION_ORIGIN__+0x66>
+  b8:	08 95       	ret
+
+000000ba <adc_init>:
+}
+
+//function to initialize ADC
+void adc_init(){
+	ADCSRA = 0;	// clear ADCSRA register
+  ba:	ea e7       	ldi	r30, 0x7A	; 122
+  bc:	f0 e0       	ldi	r31, 0x00	; 0
+  be:	10 82       	st	Z, r1
+
+	ADMUX |= (1 << REFS0);  // set reference voltage
+  c0:	ac e7       	ldi	r26, 0x7C	; 124
+  c2:	b0 e0       	ldi	r27, 0x00	; 0
+  c4:	8c 91       	ld	r24, X
+  c6:	80 64       	ori	r24, 0x40	; 64
+  c8:	8c 93       	st	X, r24
+	ADMUX |= (1 << ADLAR);  // left align ADC value to 8 bits from ADCH register
+  ca:	8c 91       	ld	r24, X
+  cc:	80 62       	ori	r24, 0x20	; 32
+  ce:	8c 93       	st	X, r24
+
+	// sampling rate is [ADC clock] / [prescaler] / [conversion clock cycles]
+	// Arduino Uno ADC clock is 16 MHz and a conversion takes 13 clock cycles
+	ADCSRA |= (1 << ADPS2) | (0 << ADPS1) | (1 << ADPS0); //prescaler 32
+  d0:	80 81       	ld	r24, Z
+  d2:	85 60       	ori	r24, 0x05	; 5
+  d4:	80 83       	st	Z, r24
+
+	ADCSRA |= (1 << ADEN);  // enable ADC
+  d6:	80 81       	ld	r24, Z
+  d8:	80 68       	ori	r24, 0x80	; 128
+  da:	80 83       	st	Z, r24
+  dc:	08 95       	ret
+
+000000de <adc_read>:
+uint8_t adc_read(uint8_t ch){
+	  // select the corresponding channel 0~7
+	  // ANDing with 7? will always keep the value
+	  // of ch between 0 and 7
+	  ch &= 0b00000111;  // AND operation with 7
+	  ADMUX = (ADMUX & 0xF8)|ch; // clears the bottom 3 bits before ORing
+  de:	ec e7       	ldi	r30, 0x7C	; 124
+  e0:	f0 e0       	ldi	r31, 0x00	; 0
+  e2:	90 81       	ld	r25, Z
+  e4:	98 7f       	andi	r25, 0xF8	; 248
+  e6:	87 70       	andi	r24, 0x07	; 7
+  e8:	89 2b       	or	r24, r25
+  ea:	80 83       	st	Z, r24
+
+	  ADCSRA |= (1<<ADSC); // start single conversion
+  ec:	ea e7       	ldi	r30, 0x7A	; 122
+  ee:	f0 e0       	ldi	r31, 0x00	; 0
+  f0:	80 81       	ld	r24, Z
+  f2:	80 64       	ori	r24, 0x40	; 64
+  f4:	80 83       	st	Z, r24
+
+	  // wait for conversion to complete
+	  // ADSC becomes 0? again
+	  // till then, run loop continuously
+	  while(ADCSRA & (1<<ADSC));
+  f6:	80 81       	ld	r24, Z
+  f8:	86 fd       	sbrc	r24, 6
+  fa:	fd cf       	rjmp	.-6      	; 0xf6 <adc_read+0x18>
+
+	  return (ADCH);
+  fc:	80 91 79 00 	lds	r24, 0x0079	; 0x800079 <__DATA_REGION_ORIGIN__+0x19>
+}
+ 100:	08 95       	ret
+
+00000102 <neuman>:
+
+//von neuman byte correction
+uint8_t neuman(uint8_t bRecv, unsigned int* cnt){
+ 102:	cf 93       	push	r28
+ 104:	df 93       	push	r29
+    // 00 and 11 are discarded
+
+    uint8_t finalByte = 0x00;
+    unsigned short int counterFinal = 0;
+
+    for(unsigned short int i=0; i<=6; i+=2){
+ 106:	20 e0       	ldi	r18, 0x00	; 0
+ 108:	30 e0       	ldi	r19, 0x00	; 0
+//von neuman byte correction
+uint8_t neuman(uint8_t bRecv, unsigned int* cnt){
+    // 00 and 11 are discarded
+
+    uint8_t finalByte = 0x00;
+    unsigned short int counterFinal = 0;
+ 10a:	a0 e0       	ldi	r26, 0x00	; 0
+ 10c:	b0 e0       	ldi	r27, 0x00	; 0
+
+    for(unsigned short int i=0; i<=6; i+=2){
+        unsigned short int bitA = (bRecv & (1<<i)  ) != 0;
+ 10e:	e8 2f       	mov	r30, r24
+ 110:	f0 e0       	ldi	r31, 0x00	; 0
+        unsigned short int bitB = (bRecv & (1<<(i+1))) != 0;
+
+        if (bitA != bitB){
+ 112:	af 01       	movw	r20, r30
+ 114:	02 2e       	mov	r0, r18
+ 116:	02 c0       	rjmp	.+4      	; 0x11c <neuman+0x1a>
+ 118:	55 95       	asr	r21
+ 11a:	47 95       	ror	r20
+ 11c:	0a 94       	dec	r0
+ 11e:	e2 f7       	brpl	.-8      	; 0x118 <neuman+0x16>
+ 120:	94 2f       	mov	r25, r20
+ 122:	91 70       	andi	r25, 0x01	; 1
+ 124:	a9 01       	movw	r20, r18
+ 126:	4f 5f       	subi	r20, 0xFF	; 255
+ 128:	5f 4f       	sbci	r21, 0xFF	; 255
+ 12a:	ef 01       	movw	r28, r30
+ 12c:	02 c0       	rjmp	.+4      	; 0x132 <neuman+0x30>
+ 12e:	d5 95       	asr	r29
+ 130:	c7 95       	ror	r28
+ 132:	4a 95       	dec	r20
+ 134:	e2 f7       	brpl	.-8      	; 0x12e <neuman+0x2c>
+ 136:	ae 01       	movw	r20, r28
+ 138:	41 70       	andi	r20, 0x01	; 1
+ 13a:	94 13       	cpse	r25, r20
+            finalByte |= (bitB << counterFinal);
+            counterFinal++;
+ 13c:	11 96       	adiw	r26, 0x01	; 1
+    // 00 and 11 are discarded
+
+    uint8_t finalByte = 0x00;
+    unsigned short int counterFinal = 0;
+
+    for(unsigned short int i=0; i<=6; i+=2){
+ 13e:	2e 5f       	subi	r18, 0xFE	; 254
+ 140:	3f 4f       	sbci	r19, 0xFF	; 255
+ 142:	28 30       	cpi	r18, 0x08	; 8
+ 144:	31 05       	cpc	r19, r1
+ 146:	29 f7       	brne	.-54     	; 0x112 <neuman+0x10>
+            finalByte |= (bitB << counterFinal);
+            counterFinal++;
+        }
+    }
+
+    *cnt = counterFinal;
+ 148:	fb 01       	movw	r30, r22
+ 14a:	b1 83       	std	Z+1, r27	; 0x01
+ 14c:	a0 83       	st	Z, r26
+    return bRecv;
+}
+ 14e:	df 91       	pop	r29
+ 150:	cf 91       	pop	r28
+ 152:	08 95       	ret
+
+00000154 <fill_byte>:
+
+//keeps filling a byte with the bits passed
+void fill_byte(uint8_t recv_byte, unsigned int cnt, uint8_t *final_byte, unsigned int cntfinal){
+ 154:	cf 93       	push	r28
+ 156:	df 93       	push	r29
+    int roll = 0;
+    for(int i=cntfinal; i<(cntfinal+cnt); i++){
+ 158:	62 0f       	add	r22, r18
+ 15a:	73 1f       	adc	r23, r19
+ 15c:	26 17       	cp	r18, r22
+ 15e:	37 07       	cpc	r19, r23
+ 160:	f0 f4       	brcc	.+60     	; 0x19e <fill_byte+0x4a>
+ 162:	fa 01       	movw	r30, r20
+ 164:	90 81       	ld	r25, Z
+ 166:	a0 e0       	ldi	r26, 0x00	; 0
+ 168:	b0 e0       	ldi	r27, 0x00	; 0
+        int bit = (recv_byte & (1<<roll)) != 0;
+        *final_byte = *final_byte | (bit<<i);
+ 16a:	c8 2f       	mov	r28, r24
+ 16c:	d0 e0       	ldi	r29, 0x00	; 0
+ 16e:	fe 01       	movw	r30, r28
+ 170:	0a 2e       	mov	r0, r26
+ 172:	02 c0       	rjmp	.+4      	; 0x178 <fill_byte+0x24>
+ 174:	f5 95       	asr	r31
+ 176:	e7 95       	ror	r30
+ 178:	0a 94       	dec	r0
+ 17a:	e2 f7       	brpl	.-8      	; 0x174 <fill_byte+0x20>
+ 17c:	e1 70       	andi	r30, 0x01	; 1
+ 17e:	ff 27       	eor	r31, r31
+ 180:	02 2e       	mov	r0, r18
+ 182:	02 c0       	rjmp	.+4      	; 0x188 <fill_byte+0x34>
+ 184:	ee 0f       	add	r30, r30
+ 186:	ff 1f       	adc	r31, r31
+ 188:	0a 94       	dec	r0
+ 18a:	e2 f7       	brpl	.-8      	; 0x184 <fill_byte+0x30>
+ 18c:	9e 2b       	or	r25, r30
+        roll++;
+ 18e:	11 96       	adiw	r26, 0x01	; 1
+}
+
+//keeps filling a byte with the bits passed
+void fill_byte(uint8_t recv_byte, unsigned int cnt, uint8_t *final_byte, unsigned int cntfinal){
+    int roll = 0;
+    for(int i=cntfinal; i<(cntfinal+cnt); i++){
+ 190:	2f 5f       	subi	r18, 0xFF	; 255
+ 192:	3f 4f       	sbci	r19, 0xFF	; 255
+ 194:	62 17       	cp	r22, r18
+ 196:	73 07       	cpc	r23, r19
+ 198:	51 f7       	brne	.-44     	; 0x16e <fill_byte+0x1a>
+ 19a:	fa 01       	movw	r30, r20
+ 19c:	90 83       	st	Z, r25
+        int bit = (recv_byte & (1<<roll)) != 0;
+        *final_byte = *final_byte | (bit<<i);
+        roll++;
+    }
+}
+ 19e:	df 91       	pop	r29
+ 1a0:	cf 91       	pop	r28
+ 1a2:	08 95       	ret
+
+000001a4 <main>:
+
+int main(void)
+{
+ 1a4:	cf 93       	push	r28
+ 1a6:	df 93       	push	r29
+ 1a8:	cd b7       	in	r28, 0x3d	; 61
+ 1aa:	de b7       	in	r29, 0x3e	; 62
+ 1ac:	27 97       	sbiw	r28, 0x07	; 7
+ 1ae:	0f b6       	in	r0, 0x3f	; 63
+ 1b0:	f8 94       	cli
+ 1b2:	de bf       	out	0x3e, r29	; 62
+ 1b4:	0f be       	out	0x3f, r0	; 63
+ 1b6:	cd bf       	out	0x3d, r28	; 61
+
+	uart_init();
+ 1b8:	0e 94 40 00 	call	0x80	; 0x80 <uart_init>
+	adc_init();
+ 1bc:	0e 94 5d 00 	call	0xba	; 0xba <adc_init>
+
+    uint8_t buffer[BUFFSIZE];          // holds the measured bytes
+    unsigned short int bufCounter = 0; // index counter of buffer[]
+
+    uint8_t tempbyteA, tempbyteB;      // temporary bytes (MAX 4 bits - due to the neuman() method)
+    unsigned int cnta, cntb = 0;       // counter of how many bits passed through neuman() and were set in the new byte (not discarded)
+ 1c0:	1e 82       	std	Y+6, r1	; 0x06
+ 1c2:	1d 82       	std	Y+5, r1	; 0x05
+
+	uart_init();
+	adc_init();
+
+    uint8_t buffer[BUFFSIZE];          // holds the measured bytes
+    unsigned short int bufCounter = 0; // index counter of buffer[]
+ 1c4:	c1 2c       	mov	r12, r1
+ 1c6:	d1 2c       	mov	r13, r1
+
+    uint8_t final_byte;                // this byte is being recursively filled with the tempByte values until we get the necessary 8 bits 
+    unsigned int cntfinal;             // counter that keeps track and points to which part of the final_byte we are, so we can keep filling it
+    while(1)
+	{
+        final_byte = 0x00;
+ 1c8:	1f 82       	std	Y+7, r1	; 0x07
+        cntfinal = 0;
+ 1ca:	e1 2c       	mov	r14, r1
+ 1cc:	f1 2c       	mov	r15, r1
+
+        while(cntfinal<8){
+            tempbyteA = neuman(adc_read(0), &cnta);
+ 1ce:	80 e0       	ldi	r24, 0x00	; 0
+ 1d0:	0e 94 6f 00 	call	0xde	; 0xde <adc_read>
+ 1d4:	be 01       	movw	r22, r28
+ 1d6:	6d 5f       	subi	r22, 0xFD	; 253
+ 1d8:	7f 4f       	sbci	r23, 0xFF	; 255
+ 1da:	0e 94 81 00 	call	0x102	; 0x102 <neuman>
+ 1de:	18 2f       	mov	r17, r24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1e0:	8a e1       	ldi	r24, 0x1A	; 26
+ 1e2:	8a 95       	dec	r24
+ 1e4:	f1 f7       	brne	.-4      	; 0x1e2 <main+0x3e>
+ 1e6:	00 c0       	rjmp	.+0      	; 0x1e8 <main+0x44>
+		    _delay_us(DELAY_US);
+            tempbyteB = neuman(adc_read(0), &cntb);
+ 1e8:	80 e0       	ldi	r24, 0x00	; 0
+ 1ea:	0e 94 6f 00 	call	0xde	; 0xde <adc_read>
+ 1ee:	be 01       	movw	r22, r28
+ 1f0:	6b 5f       	subi	r22, 0xFB	; 251
+ 1f2:	7f 4f       	sbci	r23, 0xFF	; 255
+ 1f4:	0e 94 81 00 	call	0x102	; 0x102 <neuman>
+
+            if (tempbyteA && tempbyteB){ //both not NULL
+ 1f8:	11 23       	and	r17, r17
+ 1fa:	09 f1       	breq	.+66     	; 0x23e <main+0x9a>
+ 1fc:	88 23       	and	r24, r24
+ 1fe:	f9 f0       	breq	.+62     	; 0x23e <main+0x9a>
+                if (cnta>cntb){ //get the bigger neuman() byte counter - MAX of 4bits
+ 200:	eb 81       	ldd	r30, Y+3	; 0x03
+ 202:	fc 81       	ldd	r31, Y+4	; 0x04
+ 204:	6d 81       	ldd	r22, Y+5	; 0x05
+ 206:	7e 81       	ldd	r23, Y+6	; 0x06
+ 208:	6e 17       	cp	r22, r30
+ 20a:	7f 07       	cpc	r23, r31
+ 20c:	68 f4       	brcc	.+26     	; 0x228 <main+0x84>
+                    fill_byte((tempbyteA^tempbyteB), cnta, &final_byte, cntfinal);
+ 20e:	97 01       	movw	r18, r14
+ 210:	ae 01       	movw	r20, r28
+ 212:	49 5f       	subi	r20, 0xF9	; 249
+ 214:	5f 4f       	sbci	r21, 0xFF	; 255
+ 216:	bf 01       	movw	r22, r30
+ 218:	81 27       	eor	r24, r17
+ 21a:	0e 94 aa 00 	call	0x154	; 0x154 <fill_byte>
+                    cntfinal += cnta;
+ 21e:	8b 81       	ldd	r24, Y+3	; 0x03
+ 220:	9c 81       	ldd	r25, Y+4	; 0x04
+ 222:	e8 0e       	add	r14, r24
+ 224:	f9 1e       	adc	r15, r25
+ 226:	0b c0       	rjmp	.+22     	; 0x23e <main+0x9a>
+                }
+                else{
+                    fill_byte((tempbyteA^tempbyteB), cntb, &final_byte, cntfinal);
+ 228:	97 01       	movw	r18, r14
+ 22a:	ae 01       	movw	r20, r28
+ 22c:	49 5f       	subi	r20, 0xF9	; 249
+ 22e:	5f 4f       	sbci	r21, 0xFF	; 255
+ 230:	81 27       	eor	r24, r17
+ 232:	0e 94 aa 00 	call	0x154	; 0x154 <fill_byte>
+                    cntfinal += cntb;
+ 236:	8d 81       	ldd	r24, Y+5	; 0x05
+ 238:	9e 81       	ldd	r25, Y+6	; 0x06
+ 23a:	e8 0e       	add	r14, r24
+ 23c:	f9 1e       	adc	r15, r25
+    while(1)
+	{
+        final_byte = 0x00;
+        cntfinal = 0;
+
+        while(cntfinal<8){
+ 23e:	88 e0       	ldi	r24, 0x08	; 8
+ 240:	e8 16       	cp	r14, r24
+ 242:	f1 04       	cpc	r15, r1
+ 244:	20 f2       	brcs	.-120    	; 0x1ce <main+0x2a>
+            }
+        }
+
+
+        //final_byte now has 8bits
+		buffer[bufCounter] = final_byte; //add ADC measurement to buffer
+ 246:	8f 81       	ldd	r24, Y+7	; 0x07
+ 248:	e1 e0       	ldi	r30, 0x01	; 1
+ 24a:	f0 e0       	ldi	r31, 0x00	; 0
+ 24c:	ec 0f       	add	r30, r28
+ 24e:	fd 1f       	adc	r31, r29
+ 250:	ec 0d       	add	r30, r12
+ 252:	fd 1d       	adc	r31, r13
+ 254:	80 83       	st	Z, r24
+
+        if (bufCounter == BUFFSIZE-1){ //buffer is full
+ 256:	81 e0       	ldi	r24, 0x01	; 1
+ 258:	c8 16       	cp	r12, r24
+ 25a:	d1 04       	cpc	r13, r1
+ 25c:	41 f4       	brne	.+16     	; 0x26e <main+0xca>
+
+            //start to XOR the whole buffer with itself until it ends up with a single byte
+            uint8_t xoredByte = buffer[0];
+ 25e:	99 81       	ldd	r25, Y+1	; 0x01
+            for (unsigned short int i=1; i<BUFFSIZE; i++){
+                xoredByte = xoredByte ^ buffer[i];
+            }
+
+            uart_transmit(xoredByte);
+ 260:	8a 81       	ldd	r24, Y+2	; 0x02
+ 262:	89 27       	eor	r24, r25
+ 264:	0e 94 55 00 	call	0xaa	; 0xaa <uart_transmit>
+
+            bufCounter = 0; //reset counter
+ 268:	c1 2c       	mov	r12, r1
+ 26a:	d1 2c       	mov	r13, r1
+ 26c:	ad cf       	rjmp	.-166    	; 0x1c8 <main+0x24>
+        }
+        else{
+            bufCounter++;
+ 26e:	8f ef       	ldi	r24, 0xFF	; 255
+ 270:	c8 1a       	sub	r12, r24
+ 272:	d8 0a       	sbc	r13, r24
+ 274:	a9 cf       	rjmp	.-174    	; 0x1c8 <main+0x24>
+
+00000276 <_exit>:
+ 276:	f8 94       	cli
+
+00000278 <__stop_program>:
+ 278:	ff cf       	rjmp	.-2      	; 0x278 <__stop_program>
